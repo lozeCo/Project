@@ -16,3 +16,16 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+//japhom rutas
+Route::any('tickets/{fecha}','ticketController@index');
+
+Route::post('nuevaCorrida/{fecha}','ticketController@nuevaCorrida');
+Route::post('nuevaCorrida/{fecha}/{rta}','ticketController@nuevaCorrida');
+Route::post('nuevaCorrida/{fecha}/{rta}/{vhc}','ticketController@nuevaCorrida');
+
+Route::post('storeTicket/{icr}/{client}/{sit}','ticketController@storeSit');
+
+Route::any('vehiculos','ticketController@getVehiculos');
+Route::any('rutas','ticketController@getRutas');
