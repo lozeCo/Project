@@ -15,12 +15,12 @@ class ticketController extends Controller
             crr_id,rta_nombre,rta_origen,rta_destino,rta_horaSalida,rta_precio,
             vhc_nombre,vhc_placas,vhc_descripcion,
             ecr_nombre,blt_number,blt_id,ebl_id,ebl_nombre,blt_cliente
-        FROM transports.Corrida C
-        INNER JOIN transports.Boletos USING ( crr_id)
-        INNER JOIN transports.cat_EstadoBoleto USING (ebl_id)
-        INNER JOIN transports.cat_EstadoCorrida USING( ecr_id)
-        INNER JOIN transports.cat_Ruta USING ( rta_id )
-        INNER JOIN transports.Vehiculos USING (vhc_id)
+        FROM Corrida C
+        INNER JOIN Boletos USING ( crr_id)
+        INNER JOIN cat_EstadoBoleto USING (ebl_id)
+        INNER JOIN cat_EstadoCorrida USING( ecr_id)
+        INNER JOIN cat_Ruta USING ( rta_id )
+        INNER JOIN Vehiculos USING (vhc_id)
         WHERE C.crr_fecha =DATE("'.$fecha.'")
         ';
         $t = DB::select($sql);
@@ -63,7 +63,7 @@ class ticketController extends Controller
     public function getVehiculos()
     {
         $sql =
-        'SELECT * FROM transports.Vehiculos ';
+        'SELECT * FROM Vehiculos ';
         $t = DB::select($sql);
 
         $res = new \stdClass();
@@ -79,7 +79,7 @@ class ticketController extends Controller
     public function getRutas()
     {
         $sql =
-        'SELECT * FROM transports.cat_Ruta ';
+        'SELECT * FROM cat_Ruta ';
         $t = DB::select($sql);
 
         $res = new \stdClass();
@@ -95,7 +95,7 @@ class ticketController extends Controller
     public function storeSit(Request $re,$icr,$client,$sit)
     {
 
-        DB::table("transports.Boletos")->where('blt_id',$sit)->update(['blt_cliente'=>$client,"ebl_id"=>3]);
+        DB::table("Boletos")->where('blt_id',$sit)->update(['blt_cliente'=>$client,"ebl_id"=>3]);
 
         $res= new \stdClass();
         $res->status = "ok";
