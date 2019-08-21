@@ -47,8 +47,7 @@ class ticketController extends Controller
             $res->asientos[$r->blt_number]->cliente = $r->blt_cliente;
             $res->asientos[$r->blt_number]->precio  = $r->rta_precio;
         }
-         //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
-         return response(json_encode($res), 200);
+         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', $_SERVER['REMOTE_ADDR']);
     }
     public function nuevaCorrida(Request $re,Carbon $fecha,$rta,$vhc)
     {
@@ -59,8 +58,7 @@ class ticketController extends Controller
         $ins = DB::table("transports.Corrida")->insertGetId($values,"crr_id");
         $res->idcorrida = $ins;
 
-        //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
-        return response(json_encode($res), 200);
+        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', $_SERVER['REMOTE_ADDR']);
     }
     public function getVehiculos()
     {
