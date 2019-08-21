@@ -47,7 +47,8 @@ class ticketController extends Controller
             $res->asientos[$r->blt_number]->cliente = $r->blt_cliente;
             $res->asientos[$r->blt_number]->precio  = $r->rta_precio;
         }
-         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+         //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+         return response(json_encode($res), 200);
     }
     public function nuevaCorrida(Request $re,Carbon $fecha,$rta,$vhc)
     {
@@ -58,7 +59,8 @@ class ticketController extends Controller
         $ins = DB::table("transports.Corrida")->insertGetId($values,"crr_id");
         $res->idcorrida = $ins;
 
-        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        return response(json_encode($res), 200);
     }
     public function getVehiculos()
     {
@@ -74,7 +76,8 @@ class ticketController extends Controller
             $v->nombre = $r->vhc_marca ." ".$r->vhc_nombre . " ".$r->vhc_descripcion;
             array_push($res->autos,$v);
         }
-        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        return response(json_encode($res), 200);
     }
     public function getRutas()
     {
@@ -90,7 +93,8 @@ class ticketController extends Controller
             $v->nombre = $r->rta_origen ." - ".$r->rta_destino."[ ".$r->rta_horaSalida."]";
             array_push($res->rutas,$v);
         }
-        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        return response(json_encode($res), 200);
     }
     public function storeSit(Request $re,$icr,$client,$sit)
     {
@@ -99,6 +103,7 @@ class ticketController extends Controller
 
         $res= new \stdClass();
         $res->status = "ok";
-        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        return response(json_encode($res), 200);
+        //return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', 'http://localhost:3000');
     }
 }
