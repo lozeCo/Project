@@ -55,7 +55,7 @@ class ticketController extends Controller
         $res->status = "ok";
 
         $values  = array("rta_id"=>$rta,"ecr_id"=>"1","vhc_id"=>$vhc,"crr_fecha"=>$fecha);
-        $ins = DB::table("transports.Corrida")->insertGetId($values,"crr_id");
+        $ins = DB::table("Corrida")->insertGetId($values,"crr_id");
         $res->idcorrida = $ins;
 
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
