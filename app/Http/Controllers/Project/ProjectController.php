@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Project;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use League\Fractal\Manager;
 use League\Fractal;
 use App\Http\Resources\ProjectTransformer;
 
@@ -48,15 +49,17 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, Project $id)
-    {
+    {   
+        $fractal = new Manager();
+
         if ($id->exists) {
-            // dd(Project::find($id->id));
             // return new ProjectResource($id);
-            return new Fractal\Resource\Item(Project::find($id->id), new ProjectTransformer);
+            $resource = new Fractal\Resource\Item(Project::find($id->id), new ProjectTransformer);
         } else {
             // return new ProjectCollection(Project::all());
-            return  new Fractal\Resource\Collection(Project::all(), new ProjectTransformer);
+            $resource = new Fractal\Resource\Collection(Project::all(), new ProjectTransformer);
         }
+        echo $fractal->createData($resource)->toJson();
     }
 
     /**
