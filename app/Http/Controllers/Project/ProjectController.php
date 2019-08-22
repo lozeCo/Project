@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Project;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use League\Fractal;
+use App\Http\Resources\ProjectTransformer;
 
 class ProjectController extends Controller
 {
@@ -49,9 +51,11 @@ class ProjectController extends Controller
     {
         if ($id->exists) {
             // dd(Project::find($id->id));
-            return new ProjectResource($id);
+            // return new ProjectResource($id);
+            return new Fractal\Resource\Item(Project::find($id->id), new ProjectTransformer);
         } else {
-            return new ProjectCollection(Project::all());
+            // return new ProjectCollection(Project::all());
+            return  new Fractal\Resource\Collection(Project::all(), new ProjectTransformer);
         }
     }
 
