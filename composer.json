@@ -8,7 +8,8 @@
         "php": "7.0.33",
         "barryvdh/laravel-cors": "0.11.0",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "league/fractal": "^0.18.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
