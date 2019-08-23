@@ -115,7 +115,7 @@ class ticketController extends Controller
 
     public function uploadFile(Request $request)
     {
-        dd($request->all());
+        dd($request->file());
 
 
         return response($file, 200)->header('Access-Control-Allow-Origin', "*");
