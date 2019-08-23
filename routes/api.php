@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/apiPagos/{use}/{password}', 'apiPagos@index');
+Route::middleware(['auth:api', 'cors'])->get('/apiPagos/{use}/{password}', 'apiPagos@index');
 
 Route::get('/projects/{id?}', 'Project\ProjectController@show');
 //japhom rutas
