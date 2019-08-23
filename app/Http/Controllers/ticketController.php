@@ -10,6 +10,11 @@ class ticketController extends Controller
 {
     public function index (Request $request,$fecha)
     {
+        $res = $this->getSitsByDate($fecha);
+        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
+    }
+    private function getSitsByDate($fecha)
+    {
         $sql =
         'SELECT
             crr_id,rta_nombre,rta_origen,rta_destino,rta_horaSalida,rta_precio,
@@ -47,7 +52,7 @@ class ticketController extends Controller
             $res->asientos[$r->blt_number]->cliente = $r->blt_cliente;
             $res->asientos[$r->blt_number]->precio  = $r->rta_precio;
         }
-         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
+        return $res;
     }
     public function nuevaCorrida(Request $re,Carbon $fecha,$rta,$vhc)
     {
@@ -97,9 +102,22 @@ class ticketController extends Controller
     {
 
         DB::table("Boletos")->where('blt_id',$sit)->update(['blt_cliente'=>$client,"ebl_id"=>3]);
-
-        $res= new \stdClass();
+        $res = $this->getSitsByDate($this->getDateByTrip($icr));
         $res->status = "ok";
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
+    }
+    private function getDateByTrip($icr)
+    {
+        $sql = "SELECT crr_fecha FROM Corrida WHERE crr_id = ".$icr;
+        $t = DB::select($sql);
+        return $t[0]->crr_fecha;
+    }
+
+    public function uploadFile(Request $request)
+    {
+        dd($request->file());
+
+
+        return response($file, 200)->header('Access-Control-Allow-Origin', "*");
     }
 }
