@@ -18,19 +18,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 // Route::middleware(['cors'])->get('/apiPagos/{use}/{password}', 'apiPagos@index');
 Route::get('/apiPagos/{use}/{password}', 'apiPagos@index');
+Route::post('uploadFile','apiPagos@uploadFile');
 
+
+//edgar
 Route::get('/projects/{id?}', 'Project\ProjectController@show');
-//japhom rutas
-Route::any('tickets/{fecha}','ticketController@index');
 
+
+
+//japhom rutas
+
+Route::any('tickets/{fecha}','ticketController@index');
 Route::post('nuevaCorrida/{fecha}','ticketController@nuevaCorrida');
 Route::post('nuevaCorrida/{fecha}/{rta}','ticketController@nuevaCorrida');
 Route::post('nuevaCorrida/{fecha}/{rta}/{vhc}','ticketController@nuevaCorrida');
-
 Route::post('storeTicket/{icr}/{client}/{sit}','ticketController@storeSit');
-
 Route::any('vehiculos','ticketController@getVehiculos');
 Route::any('rutas','ticketController@getRutas');
-
-Route::post('uploadFile','ticketController@uploadFile');
-Route::get('uploadFile','ticketController@uploadFile');
