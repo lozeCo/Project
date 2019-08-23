@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // Route::middleware(['cors'])->get('/apiPagos/{use}/{password}', 'apiPagos@index');
-Route::get('/apiPagos/{use}/{password}', 'apiPagos@index');
+Route::get('apiPagos/{use}/{password}', 'apiPagos@index');
 Route::post('uploadFile','apiPagos@uploadFile');
 
 
