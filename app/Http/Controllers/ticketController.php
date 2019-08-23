@@ -113,11 +113,14 @@ class ticketController extends Controller
         return $t[0]->crr_fecha;
     }
 
-    public function uploadFile(Request $request)
-    {
-        dd($request->file());
+    public function uploadfile(Request $request){
+        $file = $request->file();
+        $path = $file[0]->store('images');
+        $user = $request->input('user');
 
-
-        return response($file, 200)->header('Access-Control-Allow-Origin', "*");
+        DB::table('pagos')->insert(['usr_id' => $user, 'imagen' =>$path ] );
+        $res = new \stdClass();
+        $res->status = "ok";
+        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
     }
 }
