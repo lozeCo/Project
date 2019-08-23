@@ -33,3 +33,4 @@ Route::any('vehiculos','ticketController@getVehiculos');
 Route::any('rutas','ticketController@getRutas');
 
 Route::post('uploadFile','ticketController@uploadFile');
+Route::get('uploadFile','ticketController@uploadFile');
