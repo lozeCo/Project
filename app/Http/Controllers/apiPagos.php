@@ -19,11 +19,11 @@ class apiPagos extends Controller
     }
     public function uploadfile(Request $request){
         $file = $request->file();
-        
+
 
         $user = $request->input('user');
         foreach ( $file as $fil) {
-            $path = $fil->storage('images');
+            $path = $fil->store('images');
             DB::table('pagos')->insert(['usr_id' => $user, 'imagen' =>$path ] );
         }
 
