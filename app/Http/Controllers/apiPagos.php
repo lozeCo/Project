@@ -19,10 +19,14 @@ class apiPagos extends Controller
     }
     public function uploadfile(Request $request){
         $file = $request->file();
-        $path = $file[0]->store('images');
-        $user = $request->input('user');
+        
 
-        DB::table('pagos')->insert(['usr_id' => $user, 'imagen' =>$path ] );
+        $user = $request->input('user');
+        foreach ( $file as $fil) {
+            $path = $fil->storage('images');
+            DB::table('pagos')->insert(['usr_id' => $user, 'imagen' =>$path ] );
+        }
+
         $res = new \stdClass();
         $res->status = "ok";
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
