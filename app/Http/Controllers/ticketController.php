@@ -113,10 +113,10 @@ class ticketController extends Controller
         return $t[0]->crr_fecha;
     }
 
-    public function uploadFile(Request $request,$file)
+    public function uploadFile(Request $request)
     {
         dd($request);
-        dd($file);
+
         return response($file, 200)->header('Access-Control-Allow-Origin', "*");
     }
 }
