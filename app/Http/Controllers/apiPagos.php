@@ -12,13 +12,8 @@ class apiPagos extends Controller
     public function index($user,$password){
 
         if (\Auth::attempt(['email' => $user, 'password' => $password])) {
-            // Authentication passed...
-            //return redirect()->intended('dashboard');
-            // $sql = 'SELECT id FROM users WHERE email = "'.$user.'";';
-            // $resp = DB::select($sql);
-            // return $resp[0]->id;
             $id = \Auth::user()->id;
-            return $id;
+            return response($id, 200)->header('Access-Control-Allow-Origin', "*");
         }
         return 0;
     }
