@@ -17,13 +17,6 @@ class apiPagos extends Controller
         }
         return 0;
     }
-    public function uploadFile(Request $request)
-    {
-        dd($request->file());
-
-
-        return response($file, 200)->header('Access-Control-Allow-Origin', "*");
-    }
     public function uploadfile(Request $request){
         $file = $request->file();
         $path = $file[0]->store('images');
