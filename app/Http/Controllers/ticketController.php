@@ -31,6 +31,7 @@ class ticketController extends Controller
         $t = DB::select($sql);
 
         $res = new \stdClass();
+
         $res->asientos = [];
         foreach ($t as $r) {
             if (!isset($res->idcorrida)) {
@@ -98,12 +99,19 @@ class ticketController extends Controller
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', '*');
 
     }
-    public function storeSit(Request $re,$icr,$client,$sit)
+    public function storeSit(Request $re,$icr)
     {
-
-        DB::table("Boletos")->where('blt_id',$sit)->update(['blt_cliente'=>$client,"ebl_id"=>3]);
-        $res = $this->getSitsByDate($this->getDateByTrip($icr));
+        $datos = $re->all();
+        $where = [];
+        $update = [];
+        foreach ($datos as $value) {
+            $res = explode("||",$value);
+            DB::table("Boletos")->where('blt_id',$res[0])->update(['blt_cliente'=>$res[1],"ebl_id"=>3]);
+        }
+        $fecha = $this->getDateByTrip($icr);
+        $res = $this->getSitsByDate($fecha);
         $res->status = "ok";
+        $res->fecha  = $fecha;
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
     }
     private function getDateByTrip($icr)
@@ -112,7 +120,18 @@ class ticketController extends Controller
         $t = DB::select($sql);
         return $t[0]->crr_fecha;
     }
-
+    public function cancelSit(Request $re, $icr)
+    {
+        $datos = $re->all();
+        foreach ($datos as $value) {
+            DB::table("Boletos")->where('blt_id',$value)->update(['blt_cliente'=>"","ebl_id"=>1]);
+        }
+        $fecha = $this->getDateByTrip($icr);
+        $res = $this->getSitsByDate($fecha);
+        $res->status = "ok";
+        $res->fecha  = $fecha;
+        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
+    }
     public function uploadfile(Request $request){
         $file = $request->file();
         $path = $file[0]->store('images');
