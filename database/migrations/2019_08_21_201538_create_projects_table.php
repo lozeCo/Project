@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('name');
-            $table->string('objective');
+            $table->text('objective');
             $table->string('key');
             $table->integer('progress');            
             $table->timestamps();

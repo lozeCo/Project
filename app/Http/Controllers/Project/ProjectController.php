@@ -40,6 +40,16 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        $fractal = new Manager();
+        $project = new Project();
+
+        $data = $request->all();
+        $project->fill($data);
+        $project->user_id = 1;
+        $project->save();
+
+        $resource = new Fractal\Resource\Item($project, new ProjectTransformer);
+        echo $fractal->createData($resource)->toJson();
     }
 
     /**

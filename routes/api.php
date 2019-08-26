@@ -23,6 +23,7 @@ Route::post('uploadFile','apiPagos@uploadFile');
 
 //edgar
 Route::get('/projects/{id?}', 'Project\ProjectController@show');
+Route::post('/storeProject/','Project\ProjectController@store');
 
 
 
