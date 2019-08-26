@@ -38,3 +38,4 @@ Route::post('storeTicketM/{icr}','ticketController@storeSit');
 Route::post('cancelTicketM/{icr}','ticketController@cancelSit');
 Route::any('vehiculos','ticketController@getVehiculos');
 Route::any('rutas','ticketController@getRutas');
+Route::any('rutasCheck/{fecha}','ticketController@getRutasCheckIn');
