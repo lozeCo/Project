@@ -101,6 +101,34 @@ class ticketController extends Controller
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', '*');
 
     }
+    public function getRutasCheckIn($fecha)
+    {
+        $sql =
+        'SELECT * FROM Corrida
+        INNER JOIN Vehiculos USING (vhc_id)
+        INNER JOIN cat_Ruta USING (rta_id)
+        INNER JOIN cat_EstadoCorrida USING ( ecr_id )
+        WHERE crr_fecha = "'.$fecha.'"';
+
+        $t = DB::select($sql);
+
+        $res = new \stdClass();
+        $res->rutas = [];
+        foreach ($t as $r) {
+            $v = new \stdClass();
+            $v->crr_id = $r->crr_id;
+            $v->horaSalida = $r->rta_horaSalida;
+            $v->origen = $r->rta_origen;
+            $v->destino = $r->rta_destino;
+            $v->estado = $r->ecr_nombre;
+            $v->placas = $r->vhc_placas;
+            $v->descripcion = $r->vhc_descripcion;
+            
+
+            array_push($res->rutas, $v);
+        }
+        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', '*');
+    }
     public function storeSit(Request $re,$icr)
     {
         $datos = $re->all();
