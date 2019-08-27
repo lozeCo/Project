@@ -13,7 +13,7 @@ class ticketController extends Controller
         $res = $this->getSitsByDate($fecha);
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
     }
-    private function getSitsByDate($fecha)
+    private function getSitsByDate($fecha,$crr_id= 0)
     {
         $sql =
         'SELECT
@@ -25,9 +25,15 @@ class ticketController extends Controller
         INNER JOIN cat_EstadoBoleto USING (ebl_id)
         INNER JOIN cat_EstadoCorrida USING( ecr_id)
         INNER JOIN cat_Ruta USING ( rta_id )
-        INNER JOIN Vehiculos USING (vhc_id)
-        WHERE C.crr_fecha =DATE("'.$fecha.'")
-        ';
+        INNER JOIN Vehiculos USING (vhc_id)';
+        if($crr_id ==0) {
+            $sql .='
+            WHERE C.crr_fecha =DATE("'.$fecha.'") ';
+        } else {
+            $sql .='
+            WHERE C.crr_id ='.$crr_id.' ';
+        }
+
         $t = DB::select($sql);
 
         $res = new \stdClass();
@@ -57,11 +63,11 @@ class ticketController extends Controller
     }
     public function nuevaCorrida(Request $re,Carbon $fecha,$rta,$vhc)
     {
-        
+
 
         $values  = array("rta_id"=>$rta,"ecr_id"=>"1","vhc_id"=>$vhc,"crr_fecha"=>$fecha);
         $ins = DB::table("Corrida")->insertGetId($values,"crr_id");
-        
+
         $res = $this->getSitsByDate($fecha);
         $res->status = "ok";
         $res->idcorrida = $ins;
@@ -123,7 +129,7 @@ class ticketController extends Controller
             $v->estado = $r->ecr_nombre;
             $v->placas = $r->vhc_placas;
             $v->descripcion = $r->vhc_descripcion;
-            
+
 
             array_push($res->rutas, $v);
         }
@@ -170,6 +176,12 @@ class ticketController extends Controller
         DB::table('pagos')->insert(['usr_id' => $user, 'imagen' =>$path ] );
         $res = new \stdClass();
         $res->status = "ok";
+        return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
+    }
+
+    public function getClienteCorrida ($crr_id)
+    {
+        $res = $this->getSitsByDate("",$crr_id);
         return response(json_encode($res), 200)->header('Access-Control-Allow-Origin', "*");
     }
 }
