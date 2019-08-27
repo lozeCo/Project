@@ -67,7 +67,7 @@ class ProjectController extends Controller
             $resource = new Fractal\Resource\Item(Project::find($id->id), new ProjectTransformer);
         } else {
             // return new ProjectCollection(Project::all());
-            $resource = new Fractal\Resource\Collection(Project::all(), new ProjectTransformer);
+            $resource = new Fractal\Resource\Collection(Project::orderBy('id',"DESC")->get(), new ProjectTransformer);
         }
         echo $fractal->createData($resource)->toJson();
     }
