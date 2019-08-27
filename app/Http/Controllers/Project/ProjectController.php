@@ -69,7 +69,9 @@ class ProjectController extends Controller
             // return new ProjectCollection(Project::all());
             $resource = new Fractal\Resource\Collection(Project::orderBy('id',"DESC")->get(), new ProjectTransformer);
         }
-        echo $fractal->createData($resource)->toJson();
+        
+        return response($fractal->createData($resource)->toJson(), 200)->header('Access-Control-Allow-Origin', "*");
+        // echo $fractal->createData($resource)->toJson();
     }
 
     /**
